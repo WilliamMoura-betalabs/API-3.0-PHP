@@ -108,6 +108,8 @@ class Payment implements \JsonSerializable
 
     private $instructions;
 
+    private $fraudAnalysis;
+
     /**
      * Payment constructor.
      *
@@ -194,6 +196,11 @@ class Payment implements \JsonSerializable
         $this->demonstrative  = isset($data->Demonstrative) ? $data->Demonstrative : null;
         $this->identification = isset($data->Identification) ? $data->Identification : null;
         $this->instructions   = isset($data->Instructions) ? $data->Instructions : null;
+
+        if(isset($data->FraudAnalysis)){
+            $this->fraudAnalysis = new FraudAnalysis();
+            $this->fraudAnalysis->populate($data->FraudAnalysis);
+        }
     }
 
     /**
@@ -1103,5 +1110,23 @@ class Payment implements \JsonSerializable
         $this->instructions = $instructions;
 
         return $this;
+    }
+
+    public function fraudAnalysis()
+    {
+        $fraudAnalysis = new FraudAnalysis();
+        $this->setFraudAnalysis($fraudAnalysis);
+
+        return $fraudAnalysis;
+    }
+
+    public function setFraudAnalysis($fraudAnalysis)
+    {
+        $this->fraudAnalysis = $fraudAnalysis;
+    }
+
+    public function getFraudAnalysis()
+    {
+        return $this->fraudAnalysis;
     }
 }

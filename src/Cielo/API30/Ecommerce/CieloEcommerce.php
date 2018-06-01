@@ -56,6 +56,7 @@ class CieloEcommerce
      */
     public function createSale(Sale $sale)
     {
+        
         $createSaleRequest = new CreateSaleRequest($this->merchant, $this->environment);
 
         return $createSaleRequest->execute($sale);
