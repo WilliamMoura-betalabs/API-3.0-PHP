@@ -34,7 +34,6 @@ class Sale implements \JsonSerializable
     public static function fromJson($json)
     {
         $object = json_decode($json);
-
         $sale = new Sale();
         $sale->populate($object);
 
@@ -48,6 +47,8 @@ class Sale implements \JsonSerializable
     {
         $dataProps = get_object_vars($data);
 
+        debug2($dataProps);
+
         if (isset($dataProps['Customer'])) {
             $this->customer = new Customer();
             $this->customer->populate($data->Customer);
@@ -59,8 +60,14 @@ class Sale implements \JsonSerializable
         }
 
         if (isset($dataProps['MerchantOrderId'])) {
-            $this->merchantOrderId = $data->MerchantOrderId;
+            $this->merchantOrderId = new MerchantDefinedFields();
+            $this->merchantOrderId->populate($data->merchantOrderId);
         }
+
+        // if (isset($dataProps['MerchantOrderId'])) {
+        //     $this->merchantOrderId = $data->MerchantOrderId;
+        //     $this->merchantOrderId->populate($data->merchantOrderId);
+        // }
     }
 
     /**
@@ -156,5 +163,15 @@ class Sale implements \JsonSerializable
         $this->payment = $payment;
 
         return $this;
+    }
+
+    /**
+     * Retorna um array com os atributos da classe
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return get_object_vars($this);
     }
 }

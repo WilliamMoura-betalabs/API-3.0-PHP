@@ -69,7 +69,6 @@ abstract class AbstractRequest
 
         if ($content !== null) {
             curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($content));
-
             $headers[] = 'Content-Type: application/json';
         } else {
             $headers[] = 'Content-Length: 0';

@@ -56,7 +56,6 @@ class CieloEcommerce
      */
     public function createSale(Sale $sale)
     {
-        
         $createSaleRequest = new CreateSaleRequest($this->merchant, $this->environment);
 
         return $createSaleRequest->execute($sale);
@@ -171,5 +170,10 @@ class CieloEcommerce
         $tokenizeCardRequest = new TokenizeCardRequest($this->merchant, $this->environment);
 
         return $tokenizeCardRequest->execute($card);
+    }
+
+    public function toArray()
+    {
+        return get_object_vars($this);
     }
 }

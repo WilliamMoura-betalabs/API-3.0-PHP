@@ -163,6 +163,11 @@ class Payment implements \JsonSerializable
             $this->debitCard->populate($data->DebitCard);
         }
 
+        if (isset($data->FraudAnalysis)) {
+            $this->fraudAnalysis = new FraudAnalysis();
+            $this->fraudAnalysis->populate($data->fraudAnalysis);
+        }
+
         $this->expirationDate = isset($data->ExpirationDate) ? $data->ExpirationDate : null;
         $this->url            = isset($data->Url) ? $data->Url : null;
         $this->boletoNumber   = isset($data->BoletoNumber) ? $data->BoletoNumber : null;
@@ -196,11 +201,6 @@ class Payment implements \JsonSerializable
         $this->demonstrative  = isset($data->Demonstrative) ? $data->Demonstrative : null;
         $this->identification = isset($data->Identification) ? $data->Identification : null;
         $this->instructions   = isset($data->Instructions) ? $data->Instructions : null;
-
-        if(isset($data->FraudAnalysis)){
-            $this->fraudAnalysis = new FraudAnalysis();
-            $this->fraudAnalysis->populate($data->FraudAnalysis);
-        }
     }
 
     /**
@@ -1112,21 +1112,31 @@ class Payment implements \JsonSerializable
         return $this;
     }
 
-    public function fraudAnalysis()
-    {
-        $fraudAnalysis = new FraudAnalysis();
+    /**
+     * @return fraudAnalysis
+     */
+    public function fraudAnalysis($sequenceCriteria = FraudAnalysis::FRAUDSEQUENCECRITERIA_ALWAYS){
+        $fraudAnalysis = new FraudAnalysis($sequenceCriteria);
+        $fraudAnalysis->populate();
+
         $this->setFraudAnalysis($fraudAnalysis);
 
         return $fraudAnalysis;
     }
 
-    public function setFraudAnalysis($fraudAnalysis)
-    {
+    /*
+     *
+     */
+    public function setFraudAnalysis(FraudAnalysis $fraudAnalysis){
         $this->fraudAnalysis = $fraudAnalysis;
+        return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getFraudAnalysis()
     {
-        return $this->fraudAnalysis;
+        return $this->FraudAnalysis;
     }
 }

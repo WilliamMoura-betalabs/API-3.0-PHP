@@ -3,12 +3,11 @@
 namespace Cielo\API30\Ecommerce;
 
 /**
- * Class Payment
+ * Class Shipping
  *
  * @package Cielo\API30\Ecommerce
  */
-class Shipping implements \JsonSerializable
-{
+class Shipping implements \JsonSerializable{
 	private $addressee;
 	private $method;
 	private $phone;
@@ -16,46 +15,44 @@ class Shipping implements \JsonSerializable
 	/**
      * @param \stdClass $data
      */
-    public function populate(\stdClass $data)
-    {
-        $this->addressee    = isset($data->addressee) ? $data->addressee : null;
-        $this->method     	= isset($data->method) ? $data->method : null;
-        $this->phone 		= isset($data->phone) ? $data->phone : null; 
+    public function populate(\stdClass $data){
+        $this->addressee    = isset($data->addressee) 	? $data->addressee 	: null;
+        $this->method     	= isset($data->method) 		? $data->method 	: null;
+        $this->phone 		= isset($data->phone) 		? $data->phone 		: null;
     }
 
-    public function jsonSerialize()
-    {
+    public function jsonSerialize(){
+
         return get_object_vars($this);
     }
 
-	public function setAddressee($addressee)
-	{
+	public function setAddressee($addressee){
 		$this->addressee = $addressee;
+		return $this;
 	}
 
-	public function getAddressee()
-	{
+	public function getAddressee(){
+
 		return $this->addressee;
 	}
 
-	public function method($method)
-	{
+	public function setMethod($method){
 		$this->method = $method;
+		return $this;
 	}
 
-	public function method()
-	{
-		return $this->method
+	public function getMethod(){
+
+		return $this->method;
 	}
 
-	public function phone($phone)
-	{
+	public function setPhone($phone){
 		$this->phone = $phone;
+		return $this;
 	}
 
-	public function phone()
-	{
-		return $this->phone
-	}
+	public function getPhone(){
 
+		return $this->phone;
+	}
 }
